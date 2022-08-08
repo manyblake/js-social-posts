@@ -1,3 +1,5 @@
+const likedPosts = [];
+
 const posts = [
   {
     id: 1,
@@ -129,6 +131,7 @@ for (let i = 0; i < posts.length; i++) {
   likeButton.classList.add(`js-like-button`);
   likeButton.setAttribute(`data-postid`, [i + 1]);
   likesCTA.appendChild(likeButton);
+  likeButton.addEventListener(`click`, like);
 
   const likeButtonIcon = document.createElement(`i`);
   likeButtonIcon.className = `like-button__icon`;
@@ -152,4 +155,14 @@ for (let i = 0; i < posts.length; i++) {
   likeCounter.innerHTML = posts[i].likes;
   likesCounter.appendChild(likeCounter);
   likesCounter.innerHTML += ` persone`;
+}
+
+function like() {
+  this.classList.add(`like-button--liked`);
+  this.removeEventListener(`click`, like);
+  const arrayPosition = this.dataset.postid - 1;
+  posts[arrayPosition].likes++;
+  const likes = document.getElementById(`like-counter-${arrayPosition + 1}`);
+  likes.innerHTML = posts[arrayPosition].likes;
+  likedPosts.push(arrayPosition + 1);
 }
