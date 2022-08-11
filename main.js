@@ -158,10 +158,13 @@ for (let i = 0; i < posts.length; i++) {
 }
 
 function like() {
-  this.classList.add(`like-button--liked`);
-  this.removeEventListener(`click`, like);
+  this.classList.toggle(`like-button--liked`);
   const arrayPosition = this.dataset.postid - 1;
-  posts[arrayPosition].likes++;
+  if (this.classList.contains(`like-button--liked`)) {
+    posts[arrayPosition].likes++;
+  } else {
+    posts[arrayPosition].likes--;
+  }
   const likes = document.getElementById(`like-counter-${arrayPosition + 1}`);
   likes.innerHTML = posts[arrayPosition].likes;
   likedPosts.push(arrayPosition + 1);
